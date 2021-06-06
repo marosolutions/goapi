@@ -19,7 +19,7 @@ func (config *Config) Router(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 	case config.Service.Method:
 		// Valid request to be processed by the Controller method
-		Service.Controller(config, w, req)
+		service.Controller(config, w, req)
 	case "OPTIONS":
 		w.WriteHeader(http.StatusOK)
 	default:

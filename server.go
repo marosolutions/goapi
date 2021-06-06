@@ -10,11 +10,11 @@ type ServiceInterface interface {
 	Controller(config *Config, w http.ResponseWriter, req *http.Request)
 }
 
-var Service ServiceInterface
+var service ServiceInterface
 
 // StartService ...
 func StartService(srv ServiceInterface) {
-	Service = srv
+	service = srv
 
 	// Read configuration from the file path
 	config := ReadConfig()
