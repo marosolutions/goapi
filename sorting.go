@@ -1,12 +1,14 @@
 package goapi
 
 import (
-	"net/url"
+	"net/http"
 	"strings"
 )
 
 // Sorting ...
-func (config *Config) Sorting(urlQuery *url.Values) (sortOrder string, sortBy string) {
+func (config *Config) Sorting(req *http.Request) (sortOrder string, sortBy string) {
+	urlQuery := req.URL.Query()
+
 	validSortOrders := map[string]bool{
 		"desc": true,
 		"asc":  true,
