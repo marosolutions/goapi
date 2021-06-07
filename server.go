@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"cloud.google.com/go/spanner"
 )
 
 type ServiceInterface interface {
@@ -11,6 +13,7 @@ type ServiceInterface interface {
 }
 
 var service ServiceInterface
+var DB *spanner.Client
 
 // StartService ...
 func StartService(srv ServiceInterface) {
@@ -20,8 +23,8 @@ func StartService(srv ServiceInterface) {
 	config := ReadConfig()
 
 	// Create a new Spanner client
-	config.SpannerClient()
-	defer SpannerClient.Close()
+	DB = config.newSpannerClient()
+	defer DB.Close()
 
 	http.HandleFunc(config.Service.Path, config.Router) // Load all the routes
 

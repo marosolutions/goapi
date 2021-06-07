@@ -72,7 +72,7 @@ func (config *Config) AuthorizeApiKey(apiKey string, accountIDs []string) (autho
 	stmt.Params["service_method"] = strings.ToLower(config.Service.Method)
 
 	ctx := context.Background()
-	iter := SpannerClient.Single().Query(ctx, stmt)
+	iter := DB.Single().Query(ctx, stmt)
 	defer iter.Stop()
 
 	err = iter.Do(func(r *spanner.Row) error {
@@ -113,7 +113,7 @@ func (config *Config) AuthorizeToken(userEmail string, accountIDs []string) (aut
 	stmt.Params["service_method"] = strings.ToLower(config.Service.Method)
 
 	ctx := context.Background()
-	iter := SpannerClient.Single().Query(ctx, stmt)
+	iter := DB.Single().Query(ctx, stmt)
 	defer iter.Stop()
 
 	err = iter.Do(func(r *spanner.Row) error {
@@ -167,18 +167,18 @@ func VerifyToken(jwtToken string) (userID string, err error) {
 
 	// token.Claims : map[
 	// 	auth_time:1.610686521e+09
-	// 	email:giri@gmail.com
+	// 	email:someone@gmail.com
 	// 	email_verified:false
 	// 	firebase:map[
 	// 		identities:map[
-	// 			email:[giri@gmail.com]
-	// 			phone:[+919540327688]
+	// 			email:[someone@gmail.com]
+	// 			phone:[+919293949596]
 	// 		]
 	// 		sign_in_provider:password
 	// 	]
 	// 	name:giri giri
-	// 	phone_number:+919540327688
-	// 	user_id:8SyEzOpSizc1IrIK36zigfy6Ou32
+	// 	phone_number:+919293949596
+	// 	user_id:8SyEz1pSizc1IrIK36zigfy6Ou12
 	// ]
 
 	return fmt.Sprintf("%v", token.Claims["email"]), nil
