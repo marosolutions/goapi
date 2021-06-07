@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"strings"
 )
 
 // Config ...
@@ -52,5 +53,8 @@ func ReadConfig() (config *Config) {
 	defer configFile.Close()
 
 	json.NewDecoder(configFile).Decode(&config)
+
+	config.Service.Path = strings.ToLower(config.Service.Path)
+	config.Service.Method = strings.ToUpper(config.Service.Method)
 	return
 }

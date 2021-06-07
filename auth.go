@@ -57,7 +57,7 @@ func (config *Config) AuthorizeApiKey(apiKey string, accountIDs []string) (autho
 		WHERE ApiKeys.ApiKey = @api_key
 			AND ApiKeys.AccountId IN UNNEST (@account_ids)
 			AND LOWER(Roles.ServicePath) = @service_path
-			AND LOWER(Roles.ServiceMethod) = @service_method
+			AND UPPER(Roles.ServiceMethod) = @service_method
 	`
 
 	// Find all accounts if no account ids mentioned
@@ -98,7 +98,7 @@ func (config *Config) AuthorizeToken(userEmail string, accountIDs []string) (aut
 		WHERE Users.UserEmail = @user_email
 			AND Users.AccountId IN UNNEST (@account_ids)
 			AND LOWER(Roles.ServicePath) = @service_path
-			AND LOWER(Roles.ServiceMethod) = @service_method
+			AND UPPER(Roles.ServiceMethod) = @service_method
 	`
 
 	// Find all accounts if no account ids mentioned
